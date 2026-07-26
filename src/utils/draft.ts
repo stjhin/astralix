@@ -6,9 +6,7 @@ import { isFuturePost } from './date'
  */
 export async function getFilteredPosts() {
   const posts = await getCollection('posts')
-  return posts.filter((post: CollectionEntry<'posts'>) =>
-    !post.id.startsWith('_') && !isFuturePost(post.data.pubDate)
-  )
+  return posts.filter((post: CollectionEntry<'posts'>) => !post.id.startsWith('_') && !isFuturePost(post.data.pubDate))
 }
 
 /**

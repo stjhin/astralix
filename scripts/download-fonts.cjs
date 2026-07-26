@@ -17,13 +17,10 @@ async function download(url, dest) {
 async function getFontUrl(cssUrl, weight) {
   const css = await fetch(cssUrl, {
     headers: { 'User-Agent': 'Mozilla/5.0' }
-  }).then(r => r.text())
+  }).then((r) => r.text())
 
   // Find @font-face block for the given weight
-  const regex = new RegExp(
-    `@font-face\\s*\\{[^}]*font-weight:\\s*${weight}[^}]*url\\(([^)]+)\\)`,
-    's'
-  )
+  const regex = new RegExp(`@font-face\\s*\\{[^}]*font-weight:\\s*${weight}[^}]*url\\(([^)]+)\\)`, 's')
   const match = css.match(regex)
   if (!match) throw new Error(`Could not find font-weight ${weight} in CSS`)
   return match[1]
@@ -41,7 +38,7 @@ async function getFontUrl(cssUrl, weight) {
   await download(boldUrl, path.join(FONTS_DIR, 'NotoSansSC-Bold.otf'))
 
   console.log('Fonts ready')
-})().catch(e => {
+})().catch((e) => {
   console.error(e)
   process.exit(1)
 })

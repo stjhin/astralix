@@ -5,7 +5,7 @@ export type DateFormat = 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MONTH DAY
 export interface SiteInfo {
   website: string
   title: string
-  author: string
+  author?: string
   description: string
   language: string
 }
@@ -25,6 +25,7 @@ export interface DateSettings {
   dateFormat: DateFormat
   dateSeparator: string
   dateOnRight: boolean
+  timezone: string
 }
 
 // Post settings configuration type

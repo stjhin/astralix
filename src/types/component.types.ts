@@ -10,6 +10,7 @@ export interface PostLayoutProps {
   title: string
   pubDate: Date
   image?: string
+  keywords?: string
   readingTime?: ReadingTime
   toc?: TOCItem[]
   contentFeatures?: ContentFeatures
@@ -32,6 +33,7 @@ export interface BaseHeadProps {
   title: string
   description: string
   ogImage?: string
+  keywords?: string
 }
 
 // ImageOptimizer component props interface

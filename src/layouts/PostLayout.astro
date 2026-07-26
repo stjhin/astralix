@@ -15,11 +15,12 @@ import LinkCard from '@/components/ui/LinkCard.astro'
 import NeoDBCard from '@/components/ui/NeoDBCard.astro'
 import XPOST from '@/components/ui/XPOST.astro'
 import CopyCode from '@/components/ui/CopyCode.astro'
+import Header from '@/components/layout/Header.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 
 import { themeConfig } from '@/config'
 
-const { title, pubDate, readingTime, toc = [], contentFeatures = {} } = Astro.props as PostLayoutProps
+const { title, pubDate, keywords, readingTime, toc = [], contentFeatures = {} } = Astro.props as PostLayoutProps
 
 const postSlug = Astro.url.pathname.split('/').filter(Boolean).pop() || ''
 const ogImage = `/open-graph/${postSlug}.png`
@@ -35,9 +36,13 @@ const shouldRenderLinkCard = themeConfig.post.linkCard && contentFeatures.hasLin
     title={`${title} · ${themeConfig.site.title}`}
     description={themeConfig.site.description}
     ogImage={ogImage}
+    keywords={keywords}
     slot="head"
   />
   <div class="post-container">
+    <div>
+      <Header />
+    </div>
     <main>
       <div class="prose">
         <GradientMask />

@@ -6,9 +6,10 @@
   --content-width: 25rem;
 
   /* Typography */
-  --sans: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
-  --serif: Besley, Baskerville, Georgia, 'Times New Roman', Times, serif;
-  --mono: 'SF Mono', SFMono-Regular, ui-monospace;
+  --sans: 'Noto Serif', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'Noto Serif', serif;
+  --heading: 'Roboto Mono', monospace;
+  --mono: 'Roboto Mono', monospace;
 
   --font-size-s: 0.8125rem;
   --font-size-m: 0.9375rem;
@@ -17,9 +18,6 @@
   --font-weight-light: 350;
   --font-weight-regular: 400;
   --font-weight-bold: 500;
-
-  --spacing-s: -0.08em;
-  --spacing-m: -0.02em;
 
   /* Light Mode Colors (Default) */
   --bg: #ffffff;
@@ -107,7 +105,7 @@ html {
 
 body {
   font-family: var(--sans);
-  font-feature-settings: 'ss03' 1;
+  font-weight: 400;
   font-size: var(--font-size-m);
   line-height: 1.75;
   color: var(--text-primary);
@@ -185,14 +183,7 @@ main {
   flex-shrink: 0;
   letter-spacing: var(--spacing-s);
   font-variant-numeric: tabular-nums;
-  font-feature-settings:
-    'tnum' 1,
-    'zero' 0,
-    'cv01' 1,
-    'cv02' 1,
-    'calt' 1,
-    'ss03' 1,
-    'ordn' 1;
+  font-feature-settings: 'tnum' 1;
 }
 
 .date .month {

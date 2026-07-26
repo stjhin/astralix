@@ -1,11 +1,11 @@
-# Chiri 🌸
+# Astralix
 
 ![screenshot-light](public/screenshots/screenshot-light.png)
 ![screenshot-dark](public/screenshots/screenshot-dark.png)
 
-Chiri is a minimal blog theme built with [Astro](https://astro.build), offering customization options while preserving its clean aesthetic.
+Astralix is a minimal blog theme built with [Astro](https://astro.build), offering customization options while preserving its clean aesthetic.
 
-Check the [demo](https://chiri.the3ash.com/) for more details.
+Check the [demo](https://astralix.stjhin.dev/) for more details.
 
 ## Features
 
@@ -20,7 +20,7 @@ Check the [demo](https://chiri.the3ash.com/) for more details.
 
 ## Getting Started
 
-1. [Fork](https://github.com/the3ash/astro-chiri/fork) this repository, or use this template to [create a new repository](https://github.com/new?template_name=astro-chiri&template_owner=the3ash).
+1. [Fork](https://github.com/stjhin/astralix/fork) this repository, or use this template to [create a new repository](https://github.com/new?template_name=astralix&template_owner=stjhin).
 
 2. Run the following commands:
 

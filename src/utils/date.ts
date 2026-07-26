@@ -6,9 +6,9 @@ const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'
 const VALID_SEPARATORS = ['.', '-', '/']
 
 /**
- * @param date
- * @param format
- * @returns
+ * Format a date using its UTC components.
+ * pubDate strings like '2026-07-25' are stored as UTC midnight, so we
+ * use getUTC* to always display the date as written, regardless of timezone.
  */
 export function formatDate(date: Date, format?: string): string {
   const formatStr = (format || themeConfig.date.dateFormat).trim()
@@ -16,10 +16,12 @@ export function formatDate(date: Date, format?: string): string {
 
   const separator = VALID_SEPARATORS.includes(configSeparator.trim()) ? configSeparator.trim() : '.'
 
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const monthName = MONTHS_EN[date.getMonth()]
+  // Use UTC date components — pubDate strings like '2026-07-25' are stored
+  // as UTC midnight, and the user's intent is the date as written.
+  const year = date.getUTCFullYear()
+  const month = date.getUTCMonth() + 1
+  const day = date.getUTCDate()
+  const monthName = MONTHS_EN[month - 1]
 
   const pad = (num: number) => String(num).padStart(2, '0')
 
@@ -42,6 +44,18 @@ export function formatDate(date: Date, format?: string): string {
     default:
       return `${year}${separator}${pad(month)}${separator}${pad(day)}`
   }
+}
+
+/**
+ * Check if a post's pubDate is in the future relative to the configured timezone.
+ * Returns true if the post should be hidden (scheduled for later).
+ */
+export function isFuturePost(pubDate: Date): boolean {
+  const tz = themeConfig.date.timezone || 'UTC'
+  const now = new Date()
+  const nowInTz = new Date(now.toLocaleString('en-US', { timeZone: tz }))
+  const todayStart = new Date(nowInTz.getFullYear(), nowInTz.getMonth(), nowInTz.getDate())
+  return pubDate.getTime() > todayStart.getTime()
 }
 
 export const SUPPORTED_DATE_FORMATS: readonly DateFormat[] = [

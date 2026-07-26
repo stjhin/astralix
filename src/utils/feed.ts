@@ -1,6 +1,7 @@
 import type { APIContext, ImageMetadata } from 'astro'
 import { getImage } from 'astro:assets'
 import { getCollection, type CollectionEntry } from 'astro:content'
+import { isFuturePost } from './date'
 import { Feed } from 'feed'
 import MarkdownIt from 'markdown-it'
 import { parse as htmlParser } from 'node-html-parser'
@@ -96,7 +97,8 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string, postP
  */
 async function generateFeedInstance(context: APIContext) {
   const siteUrl = (context.site?.toString() || themeConfig.site.website).replace(/\/$/, '')
-  const { title = '', description = '', author = '', language = 'en-US' } = themeConfig.site
+  const { title = '', description = '', author, language = 'en-US' } = themeConfig.site
+  const feedAuthor = author || title
 
   const feed = new Feed({
     title: title,
@@ -104,20 +106,21 @@ async function generateFeedInstance(context: APIContext) {
     id: siteUrl,
     link: siteUrl,
     language: language,
-    copyright: `Copyright © ${new Date().getFullYear()} ${author}`,
+    copyright: `Copyright © ${new Date().getFullYear()} ${feedAuthor}`,
     updated: new Date(),
-    generator: 'Astro Chiri Feed Generator',
+    generator: 'Astro Astralix Feed Generator',
     feedLinks: {
       rss: `${siteUrl}/rss.xml`,
       atom: `${siteUrl}/atom.xml`
     },
     author: {
-      name: author,
+      name: feedAuthor,
       link: siteUrl
     }
   })
 
-  const posts = await getCollection('posts', ({ id }: CollectionEntry<'posts'>) => !id.startsWith('_'))
+  const allPosts = await getCollection('posts', ({ id }: CollectionEntry<'posts'>) => !id.startsWith('_'))
+  const posts = allPosts.filter((p: CollectionEntry<'posts'>) => !isFuturePost(p.data.pubDate))
   const sortedPosts = posts.sort(
     (a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )

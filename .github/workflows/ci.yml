@@ -58,6 +58,9 @@ jobs:
       - name: Type check
         run: tsc --noEmit
 
+      - name: Download fonts
+        run: node scripts/download-fonts.cjs
+
       - name: Build
         run: pnpm build
 

@@ -17,6 +17,7 @@ import path from 'path'
 
 export default defineConfig({
   site: themeConfig.site.website,
+  base: '/astralix/',
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',

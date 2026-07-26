@@ -3,8 +3,9 @@ import type { ThemeConfig } from './types'
 export const themeConfig: ThemeConfig = {
   // SITE INFO ///////////////////////////////////////////////////////////////////////////////////////////
   site: {
-    website: 'https://', // Site domain
-    title: '> Astralix', // Site title
+    website: 'https://stjhin.github.io/astralix', // Site domain
+    title: '> 
+    Astralix', // Site title
     description: 'A blog of a random person in the internet', // Site description
     language: 'en-US' // Default language
   },

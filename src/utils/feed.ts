@@ -110,8 +110,8 @@ async function generateFeedInstance(context: APIContext) {
     updated: new Date(),
     generator: 'Astro Astralix Feed Generator',
     feedLinks: {
-      rss: `${siteUrl}/rss.xml`,
-      atom: `${siteUrl}/atom.xml`
+      rss: new URL('rss.xml', (context.site?.toString() || siteUrl) + '/').toString(),
+      atom: new URL('atom.xml', (context.site?.toString() || siteUrl) + '/').toString()
     },
     author: {
       name: feedAuthor,
@@ -127,7 +127,7 @@ async function generateFeedInstance(context: APIContext) {
 
   for (const post of sortedPosts) {
     const postSlug = post.id.replace(/\.[^/.]+$/, '')
-    const postUrl = new URL(postSlug, siteUrl).toString()
+    const postUrl = new URL(postSlug + '/', siteUrl + '/').toString()
     const rawHtml = markdownParser.render(post.body || '')
     const processedHtml = await fixRelativeImagePaths(rawHtml, siteUrl, post.id)
     const cleanHtml = sanitizeHtml(processedHtml, {
@@ -167,7 +167,7 @@ export async function generateRSS(context: APIContext) {
     .rss2()
     .replace(
       '<?xml version="1.0" encoding="utf-8"?>',
-      '<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet type="text/xsl" href="/feeds/rss-style.xsl"?>'
+      `<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet type="text/xsl" href="${import.meta.env.BASE_URL}feeds/rss-style.xsl"?>`
     )
   return new Response(rssXml, {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' }
@@ -183,7 +183,7 @@ export async function generateAtom(context: APIContext) {
     .atom1()
     .replace(
       '<?xml version="1.0" encoding="utf-8"?>',
-      '<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet type="text/xsl" href="/feeds/atom-style.xsl"?>'
+      `<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet type="text/xsl" href="${import.meta.env.BASE_URL}feeds/atom-style.xsl"?>`
     )
   return new Response(atomXml, {
     headers: { 'Content-Type': 'application/atom+xml; charset=utf-8' }

@@ -9,19 +9,36 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
 const { title, description, ogImage, keywords } = Astro.props as BaseHeadProps
 const metaKeywords = keywords || 'blog, journal, human'
-const imageUrl = ogImage ? new URL(ogImage, Astro.url) : new URL('/og/astralix-og.png', Astro.url)
+const imageUrl = ogImage
+  ? new URL(ogImage, Astro.url)
+  : new URL(`${import.meta.env.BASE_URL}og/astralix-og.png`, Astro.url)
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/png" href="/favicons/favicon-light.png" media="(prefers-color-scheme: light)" />
-<link rel="icon" type="image/png" href="/favicons/favicon-dark.png" media="(prefers-color-scheme: dark)" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  href={`${import.meta.env.BASE_URL}favicons/favicon-light.png`}
+  media="(prefers-color-scheme: light)"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  href={`${import.meta.env.BASE_URL}favicons/favicon-dark.png`}
+  media="(prefers-color-scheme: dark)"
+/>
+<link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="alternate" type="application/rss+xml" title={themeConfig.site.title} href={new URL('rss.xml', Astro.site)} />
+<link rel="sitemap" href={`${import.meta.env.BASE_URL}sitemap-index.xml`} />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={themeConfig.site.title}
+  href={new URL('rss.xml', Astro.site + '/')}
+/>
 {themeConfig.post.katex && <link rel="stylesheet" href={katexCssUrl} media="print" onload={`this.media='all'`} />}
 <meta name="generator" content={Astro.generator} />
 

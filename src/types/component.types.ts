@@ -8,6 +8,7 @@ export interface TOCProps {
 // Post layout props interface (generic, not tied to specific data source)
 export interface PostLayoutProps {
   title: string
+  slug: string
   pubDate: Date
   image?: string
   keywords?: string
